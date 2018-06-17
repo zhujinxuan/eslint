@@ -41,17 +41,14 @@ ruleTester.run("padded-multilines", rule, {
         {
             code: `function test(a) {
   let b = a
-
   if (a.find(x => {
     if (x.checked) return true;
     const {actual, expected} =x;
     return actual === expected})) {
     b = []
     }
-
   return b
 }`,
-
             errors: [{ messageId: "before" }, { messageId: "after" }]
         }
     ]
