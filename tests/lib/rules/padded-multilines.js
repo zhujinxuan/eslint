@@ -37,12 +37,15 @@ const invalid = {
     dowhile: "function test(a){\n let b = 0;\n do {\n b++\n } while (a > 0); \n return b\n}",
     call: "function test(a){\n let b = a;\n setTimeout(() => {\n console.log(a)}, 1000)\n return b\n}"
 };
+
 const validAllowReturn = {
     if: "function test(a){\n let b = a\n \nif (a.find(x => {\n if (x.checked) return true;\n return x.actual === x.expected})) {\n b = []\n }\n return b\n}",
     for: "function test(a){\n let b = 0;\n \nfor (;a > 0; a-- ) {\n b++\n }\n return b\n}",
     while: "function test(a){\n let b = 0;\n \nwhile (a > 0) {\n b++\n }\n return b\n}",
     dowhile: "function test(a){\n let b = 0;\n \ndo {\n b++\n } while (a > 0); \n return b\n}"
 };
+
+
 
 ruleTester.run("padded-multilines", rule, {
     valid: [
@@ -52,7 +55,8 @@ ruleTester.run("padded-multilines", rule, {
         valid.for,
         valid.while,
         valid.dowhile,
-        valid.call
+        valid.call,
+        {code: "function test(a){\n let b = 0;\n \n//Line 1\n//Line2\nwhile (a > 0) {\n b++\n }\n return b\n}", options: ['comment', 'return']}
     ],
     invalid: [
         {
@@ -133,6 +137,12 @@ ruleTester.run("padded-multilines", rule, {
             output: validAllowReturn.dowhile,
             options: ["return"],
             errors: [{ messageId: "before", line: 3, column: 2 }]
+        },
+        {
+            code: "function test(a){\n let b = 0;\n//Line 1\n//Line2\nwhile (a > 0) {\n b++\n }\n return b\n}",
+            output: "function test(a){\n let b = 0;\n//Line 1\n//Line2\n\nwhile (a > 0) {\n b++\n }\n return b\n}",
+            options: ['comment', 'return'],
+            errors: [{messageId: "before", line: 5, column: 1}]
         }
     ]
 });
