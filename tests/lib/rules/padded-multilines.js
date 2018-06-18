@@ -23,26 +23,26 @@ const parserOptions = {
 const ruleTester = new RuleTester({ parserOptions });
 
 const valid = {
-    "if": "function test(a){\n let b = a\n \nif (a.find(x => {\n if (x.checked) return true;\n return x.actual === x.expected})) {\n b = []\n }\n\n return b\n}",
-    "for": "function test(a){\n let b = 0;\n \nfor (;a > 0; a-- ) {\n b++\n }\n\n return b\n}",
-    "while": "function test(a){\n let b = 0;\n \nwhile (a > 0) {\n b++\n }\n\n return b\n}",
-    "dowhile": "function test(a){\n let b = 0;\n \ndo {\n b++\n } while (a > 0);\n \n return b\n}",
-    "call": "function test(a){\n let b = a;\n \nsetTimeout(() => {\n console.log(a)}, 1000)\n\n return b\n}"
-}
+    if: "function test(a){\n let b = a\n \nif (a.find(x => {\n if (x.checked) return true;\n return x.actual === x.expected})) {\n b = []\n }\n\n return b\n}",
+    for: "function test(a){\n let b = 0;\n \nfor (;a > 0; a-- ) {\n b++\n }\n\n return b\n}",
+    while: "function test(a){\n let b = 0;\n \nwhile (a > 0) {\n b++\n }\n\n return b\n}",
+    dowhile: "function test(a){\n let b = 0;\n \ndo {\n b++\n } while (a > 0);\n \n return b\n}",
+    call: "function test(a){\n let b = a;\n \nsetTimeout(() => {\n console.log(a)}, 1000)\n\n return b\n}"
+};
 
 const invalid = {
-    "if" : "function test(a){\n let b = a\n if (a.find(x => {\n if (x.checked) return true;\n return x.actual === x.expected})) {\n b = []\n }\n return b\n}",
-    "for": "function test(a){\n let b = 0;\n for (;a > 0; a-- ) {\n b++\n }\n return b\n}",
-    "while": "function test(a){\n let b = 0;\n while (a > 0) {\n b++\n }\n return b\n}",
-    "dowhile": "function test(a){\n let b = 0;\n do {\n b++\n } while (a > 0); \n return b\n}",
-    "call": "function test(a){\n let b = a;\n setTimeout(() => {\n console.log(a)}, 1000)\n return b\n}"
-}
+    if: "function test(a){\n let b = a\n if (a.find(x => {\n if (x.checked) return true;\n return x.actual === x.expected})) {\n b = []\n }\n return b\n}",
+    for: "function test(a){\n let b = 0;\n for (;a > 0; a-- ) {\n b++\n }\n return b\n}",
+    while: "function test(a){\n let b = 0;\n while (a > 0) {\n b++\n }\n return b\n}",
+    dowhile: "function test(a){\n let b = 0;\n do {\n b++\n } while (a > 0); \n return b\n}",
+    call: "function test(a){\n let b = a;\n setTimeout(() => {\n console.log(a)}, 1000)\n return b\n}"
+};
 const validAllowReturn = {
-    "if" : "function test(a){\n let b = a\n \nif (a.find(x => {\n if (x.checked) return true;\n return x.actual === x.expected})) {\n b = []\n }\n return b\n}",
-    "for": "function test(a){\n let b = 0;\n \nfor (;a > 0; a-- ) {\n b++\n }\n return b\n}",
-    "while": "function test(a){\n let b = 0;\n \nwhile (a > 0) {\n b++\n }\n return b\n}",
-    "dowhile": "function test(a){\n let b = 0;\n \ndo {\n b++\n } while (a > 0); \n return b\n}"
-}
+    if: "function test(a){\n let b = a\n \nif (a.find(x => {\n if (x.checked) return true;\n return x.actual === x.expected})) {\n b = []\n }\n return b\n}",
+    for: "function test(a){\n let b = 0;\n \nfor (;a > 0; a-- ) {\n b++\n }\n return b\n}",
+    while: "function test(a){\n let b = 0;\n \nwhile (a > 0) {\n b++\n }\n return b\n}",
+    dowhile: "function test(a){\n let b = 0;\n \ndo {\n b++\n } while (a > 0); \n return b\n}"
+};
 
 ruleTester.run("padded-multilines", rule, {
     valid: [
@@ -52,18 +52,18 @@ ruleTester.run("padded-multilines", rule, {
         valid.for,
         valid.while,
         valid.dowhile,
-        valid.call,
+        valid.call
     ],
     invalid: [
         {
             code: invalid.if,
             output: valid.if,
-            errors: [{ messageId: "before", line: 3, column: 2 }, { messageId: "after", line: 7, column:3}]
+            errors: [{ messageId: "before", line: 3, column: 2 }, { messageId: "after", line: 7, column: 3 }]
         },
         {
             code: invalid.for,
             output: valid.for,
-            errors: [{ messageId: "before" , line: 3, column: 2}, { messageId: "after", line:5, columb:3 }]
+            errors: [{ messageId: "before", line: 3, column: 2 }, { messageId: "after", line: 5, columb: 3 }]
         },
         {
             code: invalid.while,
@@ -84,13 +84,13 @@ ruleTester.run("padded-multilines", rule, {
             code: invalid.if,
             output: valid.if,
             options: ["comment"],
-            errors: [{ messageId: "before", line: 3, column: 2 }, { messageId: "after", line: 7, column:3}]
+            errors: [{ messageId: "before", line: 3, column: 2 }, { messageId: "after", line: 7, column: 3 }]
         },
         {
             code: invalid.for,
             output: valid.for,
             options: ["comment"],
-            errors: [{ messageId: "before" , line: 3, column: 2}, { messageId: "after", line:5, columb:3 }]
+            errors: [{ messageId: "before", line: 3, column: 2 }, { messageId: "after", line: 5, columb: 3 }]
         },
         {
             code: invalid.while,
@@ -120,7 +120,7 @@ ruleTester.run("padded-multilines", rule, {
             code: invalid.for,
             output: validAllowReturn.for,
             options: ["return"],
-            errors: [{ messageId: "before" , line: 3, column: 2}]
+            errors: [{ messageId: "before", line: 3, column: 2 }]
         },
         {
             code: invalid.while,
