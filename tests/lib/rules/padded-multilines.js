@@ -56,7 +56,8 @@ ruleTester.run("padded-multilines", rule, {
         valid.while,
         valid.dowhile,
         valid.call,
-        {code: "function test(a){\n let b = 0;\n \n//Line 1\n//Line2\nwhile (a > 0) {\n b++\n }\n return b\n}", options: ['comment', 'return']}
+        {code: "function test(a){\n let b = 0;\n \n//Line 1\n//Line2\nwhile (a > 0) {\n b++\n }\n return b\n}", options: ['comment', 'return']},
+        {code: "function test(a){\n let b = 0;\n \n/* Line 1\nLine2 */\nwhile (a > 0) {\n b++\n }\n return b\n}", options: ['comment', 'return']}
     ],
     invalid: [
         {
@@ -143,6 +144,14 @@ ruleTester.run("padded-multilines", rule, {
             output: "function test(a){\n let b = 0;\n//Line 1\n//Line2\n\nwhile (a > 0) {\n b++\n }\n return b\n}",
             options: ['comment', 'return'],
             errors: [{messageId: "before", line: 5, column: 1}]
-        }
+        },
+        {
+            code: "function test(a){\n let b = 0;\n/*Line 1\nLine2*/ \nwhile (a > 0) {\n b++\n }\n return b\n}",
+            output: "function test(a){\n let b = 0;\n/*Line 1\nLine2*/ \n\nwhile (a > 0) {\n b++\n }\n return b\n}",
+            options: ['comment', 'return'],
+            errors: [{messageId: "before", line: 5, column: 1}]
+        },
+
     ]
 });
+
