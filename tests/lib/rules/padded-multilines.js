@@ -35,6 +35,12 @@ const invalid = {
     "while": "function test(a){\n let b = 0;\n while (a > 0) {\n b++\n }\n return b\n}",
     "dowhile": "function test(a){\n let b = 0;\n do {\n b++\n } while (a > 0); \n return b\n}"
 }
+const validAllowReturn = {
+    "if" : "function test(a){\n let b = a\n \nif (a.find(x => {\n if (x.checked) return true;\n return x.actual === x.expected})) {\n b = []\n }\n return b\n}",
+    "for": "function test(a){\n let b = 0;\n \nfor (;a > 0; a-- ) {\n b++\n }\n return b\n}",
+    "while": "function test(a){\n let b = 0;\n \nwhile (a > 0) {\n b++\n }\n return b\n}",
+    "dowhile": "function test(a){\n let b = 0;\n \ndo {\n b++\n } while (a > 0); \n return b\n}"
+}
 
 ruleTester.run("padded-multilines", rule, {
     valid: [
@@ -63,7 +69,56 @@ ruleTester.run("padded-multilines", rule, {
         {
             code: invalid.dowhile,
             output: valid.dowhile,
+            options: ["comment"],
             errors: [{ messageId: "before", line: 3, column: 2 }, { messageId: "after", line: 5, column: 18 }]
+        },
+        {
+            code: invalid.if,
+            output: valid.if,
+            options: ["comment"],
+            errors: [{ messageId: "before", line: 3, column: 2 }, { messageId: "after", line: 7, column:3}]
+        },
+        {
+            code: invalid.for,
+            output: valid.for,
+            options: ["comment"],
+            errors: [{ messageId: "before" , line: 3, column: 2}, { messageId: "after", line:5, columb:3 }]
+        },
+        {
+            code: invalid.while,
+            output: valid.while,
+            options: ["comment"],
+            errors: [{ messageId: "before", line: 3, column: 2 }, { messageId: "after", line: 5, column: 3 }]
+        },
+        {
+            code: invalid.dowhile,
+            output: valid.dowhile,
+            options: ["comment"],
+            errors: [{ messageId: "before", line: 3, column: 2 }, { messageId: "after", line: 5, column: 18 }]
+        },
+        {
+            code: invalid.if,
+            output: validAllowReturn.if,
+            options: ["return"],
+            errors: [{ messageId: "before", line: 3, column: 2 }]
+        },
+        {
+            code: invalid.for,
+            output: validAllowReturn.for,
+            options: ["return"],
+            errors: [{ messageId: "before" , line: 3, column: 2}]
+        },
+        {
+            code: invalid.while,
+            output: validAllowReturn.while,
+            options: ["return"],
+            errors: [{ messageId: "before", line: 3, column: 2 }]
+        },
+        {
+            code: invalid.dowhile,
+            output: validAllowReturn.dowhile,
+            options: ["return"],
+            errors: [{ messageId: "before", line: 3, column: 2 }]
         }
     ]
 });
